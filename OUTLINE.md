@@ -2178,3 +2178,273 @@
     - go test -coverprofile c.out
     - go tool cover -html=c.out ← abre no browser
     - go tool cover -h ← para mais detalhes
+
+### Lista dos Verbs de Formatação do Go:
+Para valores genéricos:
+- %v: Valor padrão do tipo.
+- %+v: Inclui campos de structs com nomes.
+- %#v: Representação em formato Go (útil para depuração).
+- %T: Mostra o tipo do valor.
+- %%: Imprime o caractere %.
+- Para strings e caracteres:
+- %s: Imprime como string simples.
+- %q: String entre aspas.
+- %x: String em formato hexadecimal (minúsculo).
+- %X: String em formato hexadecimal (maiúsculo).
+
+## Para inteiros:
+- %d: Representação decimal.
+- %b: Binário.
+- %o: Octal.
+- %x: Hexadecimal (minúsculo).
+- %X: Hexadecimal (maiúsculo).
+- %c: Representa como caractere correspondente ao valor Unicode.
+
+## Para ponto flutuante e números complexos:
+- %f: Decimal com ponto fixo.
+- %e: Notação científica (com e minúsculo).
+- %E: Notação científica (com E maiúsculo).
+- %g: Escolhe entre %f ou %e com base no valor.
+- %G: Escolhe entre %f ou %E.
+
+## Para booleanos:
+- %t: Imprime true ou false.
+  
+## Para ponteiros:
+- %p: Mostra o valor do ponteiro em hexadecimal.
+
+## **Exemplo prático:**
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    var (
+        str = "Hello"
+        num = 42
+        flt = 3.14
+        bol = true
+    )
+
+    fmt.Printf("String: %s\n", str)
+    fmt.Printf("Decimal: %d\n", num)
+    fmt.Printf("Float: %f\n", flt)
+    fmt.Printf("Boolean: %t\n", bol)
+    fmt.Printf("Type of num: %T\n", num)
+    fmt.Printf("Struct: %+v\n", struct{ Name string }{Name: "John"})
+}
+```
+
+```yaml
+String: Hello
+Decimal: 42
+Float: 3.140000
+Boolean: true
+Type of num: int
+Struct: {Name:John}
+
+```
+
+# Guia de Verbos de Formatação no Go
+
+## Verbos de Formatação Geral
+
+Os seguintes verbos podem ser usados com todos os tipos de dados:
+
+| Verbo | Descrição                                   |
+|-------|---------------------------------------------|
+| `%v`  | Imprime o valor no formato padrão           |
+| `%#v` | Imprime o valor no formato de sintaxe Go    |
+| `%T`  | Imprime o tipo do valor                     |
+| `%%`  | Imprime o caractere `%`                     |
+
+### Exemplo
+```go
+package main
+import ("fmt")
+
+func main() {
+  var i = 15.5
+  var txt = "Hello World!"
+
+  fmt.Printf("%v\n", i)
+  fmt.Printf("%#v\n", i)
+  fmt.Printf("%v%%\n", i)
+  fmt.Printf("%T\n", i)
+
+  fmt.Printf("%v\n", txt)
+  fmt.Printf("%#v\n", txt)
+  fmt.Printf("%T\n", txt)
+}
+```
+```yml
+15.5  
+15.5  
+15.5%  
+float64  
+Hello World!  
+"Hello World!"  
+string  
+```
+## Verbos de Formatação de Inteiros
+
+Os seguintes verbos podem ser usados com o tipo de dado inteiro:
+
+| **Verbo**  | **Descrição**                                         |
+|------------|-------------------------------------------------------|
+| `%b`       | Base 2                                               |
+| `%d`       | Base 10                                              |
+| `%+d`      | Base 10, sempre mostra o sinal                       |
+| `%o`       | Base 8                                               |
+| `%O`       | Base 8, com prefixo `0o`                             |
+| `%x`       | Base 16, letras minúsculas                           |
+| `%X`       | Base 16, letras maiúsculas                           |
+| `%#x`      | Base 16, com prefixo `0x`                            |
+| `%4d`      | Preenche com espaços (largura 4, alinhado à direita) |
+| `%-4d`     | Preenche com espaços (largura 4, alinhado à esquerda)|
+| `%04d`     | Preenche com zeros (largura 4)                       |
+
+# Exemplo
+```go
+package main
+import ("fmt")
+
+func main() {
+  var i = 15
+ 
+  fmt.Printf("%b\n", i)
+  fmt.Printf("%d\n", i)
+  fmt.Printf("%+d\n", i)
+  fmt.Printf("%o\n", i)
+  fmt.Printf("%O\n", i)
+  fmt.Printf("%x\n", i)
+  fmt.Printf("%X\n", i)
+  fmt.Printf("%#x\n", i)
+  fmt.Printf("%4d\n", i)
+  fmt.Printf("%-4d\n", i)
+  fmt.Printf("%04d\n", i)
+}
+```
+# Resultado 
+```yml
+1111  
+15  
++15  
+17  
+0o17  
+f  
+F  
+0xf  
+  15  
+15   
+0015  
+```
+# Verbos de Formatação de Strings
+
+Os seguintes verbos podem ser usados com o tipo de dado string:
+
+| **Verbo** | **Descrição**                                                      |
+|-----------|--------------------------------------------------------------------|
+| `%s`      | Imprime o valor como string simples                                |
+| `%q`      | Imprime o valor como string entre aspas                            |
+| `%8s`     | Imprime a string simples (largura 8, alinhada à direita)           |
+| `%-8s`    | Imprime a string simples (largura 8, alinhada à esquerda)          |
+| `%x`      | Imprime o valor em hexadecimal                                     |
+| `% x`     | Imprime o valor em hexadecimal com espaços                         |
+
+# Exemplo
+
+```go
+package main
+import ("fmt")
+
+func main() {
+  var txt = "Hello"
+ 
+  fmt.Printf("%s\n", txt)
+  fmt.Printf("%q\n", txt)
+  fmt.Printf("%8s\n", txt)
+  fmt.Printf("%-8s\n", txt)
+  fmt.Printf("%x\n", txt)
+  fmt.Printf("% x\n", txt)
+}
+```
+# Resultado
+```yml
+Copy code
+Hello  
+"Hello"  
+   Hello  
+Hello   
+48656c6c6f  
+48 65 6c 6c 6f
+```  
+# Verbos de Formatação de Booleanos
+Os seguintes verbos podem ser usados com o tipo de dado booleano:
+
+| **Verbo** | **Descrição**                               |
+|-----------|---------------------------------------------|
+| `%t`      | Valor do operador booleano como `true` ou `false` |
+
+# Exemplo
+```yml
+go
+Copy code
+package main
+import ("fmt")
+
+func main() {
+  var i = true
+  var j = false
+
+  fmt.Printf("%t\n", i)
+  fmt.Printf("%t\n", j)
+}
+```
+# Resultado
+```yml
+arduino
+Copy code
+true  
+false
+```
+## Verbos de Formatação de Números Flutuantes
+Os seguintes verbos podem ser usados com o tipo de dado float:
+
+| **Verbo** | **Descrição**                                         |
+|-----------|-------------------------------------------------------|
+| `%e`      | Notação científica com `e` como expoente              |
+| `%f`      | Ponto decimal, sem expoente                           |
+| `%.2f`    | Largura padrão, precisão 2                            |
+| `%6.2f`   | Largura 6, precisão 2                                 |
+| `%g`      | Expoente quando necessário, apenas dígitos úteis     |
+
+
+# Exemplo
+```go
+go
+Copy code
+package main
+import ("fmt")
+
+func main() {
+  var i = 3.141
+
+  fmt.Printf("%e\n", i)
+  fmt.Printf("%f\n", i)
+  fmt.Printf("%.2f\n", i)
+  fmt.Printf("%6.2f\n", i)
+  fmt.Printf("%g\n", i)
+}
+```
+# Resultado
+```yml
+Copy code
+3.141000e+00  
+3.141000  
+3.14  
+  3.14  
+3.141 
+``` 
